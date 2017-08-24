@@ -8,3 +8,5 @@ Usage:
 (outputs GFA on stdout)
 
 It ain't fast, and will probably break in the future, but it gets the job done.
+
+Also see: https://github.com/lh3/gfa1/blob/master/misc/supernova2gfa.c
