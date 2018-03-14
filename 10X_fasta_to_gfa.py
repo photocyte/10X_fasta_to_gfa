@@ -4,6 +4,7 @@ import Bio
 import Bio.SeqIO
 import sys
 import argparse
+import re
 
 parser = argparse.ArgumentParser(description='Convert Supernova assembler "raw" style FASTA output to GFA format')
 parser.add_argument('file',help="The FASTA file to convert")
@@ -11,12 +12,24 @@ args = parser.parse_args()
 
 handle = Bio.SeqIO.parse(args.file,"fasta")
 
+header_re = re.compile("([0-9]+) edges=([0-9a-zA-Z_,]+) left=([0-9a-zA-Z_,]+) right=([0-9a-zA-Z_,]+)")
+
 vertex = dict() ##All the vertexes 
 
 print "H	VN:Z:1.0" ##GFA header
 
 i=0
 for record in handle:
+		regex_match = header_re.search(record.description)
+		RECORD_ID = regex_match.group(1)
+		EDGES = regex_match.group(2)
+		LEFT = regex_match.group(3)
+		RIGHT = regex_match.group(4)
+		sys.stderr.write(ID+"\n")
+		sys.stderr.write(EDGES+"\n")
+		sys.stderr.write(LEFT+"\n")
+		sys.stderr.write(RIGHT+"\n")
+		exit()
 		s = record.description.find("edges=")
 		d = record.description[s:].find(" ") + s
 		EDGE_ID = record.description[s+6:d] ##Plus 6 removes edges=
